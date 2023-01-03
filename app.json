@@ -28,6 +28,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "0733e8b2-7a16-484f-bdf8-35d8af483bfa"
+      }
+    },
+    "owner": "rupesh-10"
   }
 }
