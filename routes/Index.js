@@ -1,7 +1,9 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import Splash from '../views/common/Splash';
-import Signup from '../views/common/Signup';
-import {Image,View} from 'react-native';
+import SplashScreen from '../views/common/Splash';
+import SignupScreen from '../views/common/Signup';
+import LoginScreen from '../views/common/Login';
+import FarmerDashboardScreen from '../views/farmers/Dashboard';
+import {Image} from 'react-native';
 export default Route = () => {
     const Stack = createNativeStackNavigator();
     return (
@@ -16,12 +18,16 @@ export default Route = () => {
           headerStyle: {
             backgroundColor: '#AFF3AA',
           },
-          headerTitleStyle: { flex: 1, textAlign: 'center' },
-      
+          headerTitleStyle: { flex: 1, textAlign: 'center', alignSelf:'center' },
+    
           }}>
-            <Stack.Screen name="Splash" component={Splash} options={{headerShown: false}}>
+            <Stack.Screen name="Splash" component={SplashScreen} options={{headerShown: false}}>
             </Stack.Screen>
-            <Stack.Screen name="Signup" component={Signup}>
+            <Stack.Screen name="Signup" component={SignupScreen}>
+            </Stack.Screen>
+            <Stack.Screen name="Login" component={LoginScreen}>
+            </Stack.Screen>
+            <Stack.Screen name="FarmerDashboard" component={FarmerDashboardScreen}>
             </Stack.Screen>
         </Stack.Navigator>
     )

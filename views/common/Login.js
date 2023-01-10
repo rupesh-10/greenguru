@@ -3,18 +3,11 @@ import commonStyles from '../../assets/styles/common'
 import {
     Roboto_400Regular,
 } from "@expo-google-fonts/dev";
-export default Signup = ({navigation})=>{
+export default Login = ({navigation})=>{
     return (
         <View style={commonStyles.greenView}>
-            <Text style={commonStyles.header2}>Signup</Text>
+            <Text style={commonStyles.header2}>Login</Text>
             <View style={{paddingTop:20}}>
-                <View style={{paddingTop:20}}>
-                    <TextInput
-                    style={styles.input}
-                    placeholder="Full Name"
-                />
-                </View>
-
                 <View style={{paddingTop:20}}>
                     <TextInput
                         style={styles.input}
@@ -29,22 +22,14 @@ export default Signup = ({navigation})=>{
                     />
                 </View>
 
-                <View style={{paddingTop:20}}>
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Confirm Password"
-                    />
-                </View>
-                <TouchableOpacity onPress={()=>navigation.navigate('Login')}>
-                <Text style={styles.alreadyHaveAccount}>
-                     Already have an account ? 
+                <Text style={styles.forgotPassword}>
+                    Forgot Password ?
                 </Text>
-                </TouchableOpacity>
                 <TouchableOpacity
-                    style={styles.signupButton}
+                    style={styles.loginButton}
                     onPress={() => navigation.navigate('FarmerDashboard')}
                     underlayColor='#fff'>
-                    <Text style={styles.signupText}>Sign Up</Text>
+                    <Text style={styles.loginText}>Login</Text>
                 </TouchableOpacity>
             </View>
         </View>
@@ -61,7 +46,7 @@ const styles = StyleSheet.create({
       color:'#295A54',
       fontFamily:'Roboto_400Regular'
     },
-    signupButton:{
+    loginButton:{
         height: 64,
         backgroundColor:'#004B03',
         borderRadius:30,
@@ -71,7 +56,7 @@ const styles = StyleSheet.create({
         display:'flex',
         justifyContent:'center',
       },
-      signupText:{
+      loginText:{
           color:'#fff',
           textAlign:'center',
           fontSize:20,
@@ -79,7 +64,7 @@ const styles = StyleSheet.create({
           fontWeight:'400',
           fontFamily:'Roboto_400Regular'
       },
-      alreadyHaveAccount:{
+      forgotPassword:{
         alignSelf:'flex-end',
         lineHeight:26,
         fontWeight:'500',
