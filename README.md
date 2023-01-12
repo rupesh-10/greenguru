@@ -1,4 +1,15 @@
-# greenguru
-this is a project of an app for helping the people who need in of their crops and plants care.
---To provide hands-on plant disease detection without need for the biologist.
---To provide preventive measures and cure of diseases if any occurs.
+
+<img src="https://res.cloudinary.com/dqrrkueir/image/upload/v1672937321/greenguru/image-removebg-preview_3_psng2i.png" width=400 height="300">
+<img src="https://res.cloudinary.com/dqrrkueir/image/upload/v1673527328/greenguru/image-removebg-preview_5_m5swbc.png">
+
+<h3>#Requirements</h3>
+<p> Node version > 16 </p>
+<p> npm > 8 </p>
+<p> (Android or Ios emulator with SDK for Android) or Expo Go App on Android or Ios device </p>
+
+<h3>#Installation</h3>
+<p>git clone git@github.com:rupesh-10/greenguru.git </p>
+<p>cd greenguru </p>
+<p> npm install </p>
+<p> npm run start </p>
+
