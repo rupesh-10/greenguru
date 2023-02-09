@@ -1,5 +1,8 @@
 
 import {StyleSheet} from 'react-native'
+import {
+    Roboto_400Regular,
+} from "@expo-google-fonts/dev";
 
  export default StyleSheet.create({
 
@@ -67,7 +70,7 @@ import {StyleSheet} from 'react-native'
     },
 
     greyView:{
-        backgroundColor:"#FFFFDD",
+        backgroundColor:"#e6f5e6",
         height:'100%',
     },
 

@@ -1,6 +1,12 @@
 import { StyleSheet, View,Image,TouchableOpacity } from 'react-native';
-
+import React,{useEffect} from 'react'
+import { auth } from '../../firebase';
+import checkAuthenticated from '../../middlewares/checkAuthenticated';
 export default function Splash({navigation}) {
+
+    checkAuthenticated.isNotAuthenticated()
+    checkAuthenticated.isAuthenticated()
+ 
     return (
       <View style={{
           // Try setting `flexDirection` to `"row"`.
@@ -8,7 +14,7 @@ export default function Splash({navigation}) {
           flex:1,
         }}>
           <View style={{flex:2,alignItems:'center',justifyContent:'flex-end',marginTop:'5%'}}>
-            <TouchableOpacity onPress={()=>navigation.navigate('Signup')}>
+            <TouchableOpacity>
                 <Image
                 source={{
                     uri: 'https://res.cloudinary.com/dqrrkueir/image/upload/v1672937321/greenguru/image-removebg-preview_3_psng2i.png',
