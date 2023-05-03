@@ -1,19 +1,21 @@
 import React from 'react'
-import {View, ScrollView, Text,StyleSheet,TextInput, TouchableOpacity,Image} from 'react-native';
+import {View, ScrollView, Text,StyleSheet,TextInput, TouchableOpacity,Image, Dimensions} from 'react-native';
 import commonStyles from '../../assets/styles/common'
+const {width} = Dimensions.get('screen');
 
 export default ServicesCard = (props) => {
     return (
     <TouchableOpacity onPress={props.onPressed}>
-    <View style={[styles.serviceCard,{flext:1,height:props.height || 110, width:props.width || 180}]}>
+    <View style={[styles.serviceCard,{flext:1,height:props.height || 110, width:props.width || width/2.3}]}>
         <Image source={{uri:props.image}}
         style={{
             width:props.imgWidth || 52,
             height:props.imgHeight || 75,
-            alignSelf:'center'
+            alignSelf:'center',
+            marginTop:props.imageMarginTop || 5
         }}
         ></Image>
-            <Text style={[commonStyles.paragraph2,{alignSelf:'center'}]}>{props.title}</Text>
+            <Text style={[commonStyles.paragraph2,{alignSelf:'center',marginTop:props.textMarginTop}]}>{props.title}</Text>
     </View>
     </TouchableOpacity>
     )

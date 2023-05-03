@@ -8,7 +8,6 @@ import {
 } from "react-native";
 import commonStyles from "../../assets/styles/common";
 import React, { useEffect, useState } from "react";
-import { Roboto_400Regular } from "@expo-google-fonts/dev";
 import services from "../../api/services";
 import { auth, database } from "../../firebase";
 import * as Device from "expo-device";
@@ -161,7 +160,6 @@ const styles = StyleSheet.create({
 		padding: 10,
 		fontSize: 24,
 		color: "#295A54",
-		fontFamily: "Roboto_400Regular",
 	},
 	signupButton: {
 		height: 64,
@@ -179,7 +177,6 @@ const styles = StyleSheet.create({
 		fontSize: 20,
 		lineHeight: 23,
 		fontWeight: "400",
-		fontFamily: "Roboto_400Regular",
 	},
 	alreadyHaveAccount: {
 		alignSelf: "flex-end",

@@ -21,7 +21,15 @@ import checkAuthenticated from '../../middlewares/checkAuthenticated';
 export default Dashboard = ({ navigation }) => {
     checkAuthenticated.isNotAuthenticated()
     const [user,setUser] = useState({})
-    const [articles,setArticles] = useState([])
+    const [todayDay,setTodayDay] = useState('')
+    const [articles,setArticles] = useState([
+        {
+            title:'उखुको मूल्य प्रतिक्विन्टल २० रुपैयाँले बढ्यो, ७० रुपैयाँ ढुवानी खर्च',
+            clean_url:'https://krishidaily.com/sugar-farmer-5/9716/',
+            media:'https://i0.wp.com/krishidaily.com/wp-content/uploads/2018/08/Sugar-farming.jpg?fit=636%2C462&ssl=1',
+            published_date:'28 Magh 2079'
+        }
+    ])
     const [isProcessing,setIsProcessing] = useState(false)
 
 	const redirectToDetector = () => {
@@ -42,13 +50,21 @@ export default Dashboard = ({ navigation }) => {
         setUser(res.data)
     }).catch(err=>{
         console.log(err)
+    }).finally(()=>{
+        const todayDate = new Date()
+        const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+            "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+            ];
+        const formattedDate = monthNames[todayDate.getMonth()] + " "+ String(todayDate.getDate()).padStart(2, '0');
+        console.log(todayDate)
+        setTodayDay(formattedDate)
     });
 
-    services.getNews().then(res=>{
-        setArticles(res.data.articles)
-    }).catch(err=>{
-        console.log(err)
-    })
+    // services.getNews().then(res=>{
+    //     setArticles(res.data.articles)
+    // }).catch(err=>{
+    //     console.log(err)
+    // })
 
 	function greetNow() {
 		const hour = new Date().getHours();
@@ -104,7 +120,7 @@ export default Dashboard = ({ navigation }) => {
 							]}
 						>
 							<View style={{ flext: 1 }}>
-								<Text style={[commonStyles.paragraph1]}>Hetauda, 1 Jan</Text>
+								<Text style={[commonStyles.paragraph1]}>Hetauda, { todayDay }</Text>
 								<Text style={[commonStyles.paragraph1]}>19° C</Text>
 								<Text
 									style={[
@@ -116,7 +132,7 @@ export default Dashboard = ({ navigation }) => {
 									Sunset 6:00 PM
 								</Text>
 								<Text style={commonStyles.paragraph3}>
-									Rain expected at 7:00 PM
+									No Rain expected for today
 								</Text>
 							</View>
 
@@ -154,13 +170,17 @@ export default Dashboard = ({ navigation }) => {
 							<ServiceCard
 								onPressed={redirectToDetector}
 								title="Detect Disease"
+                                imageMarginTop={10}
 								image="https://res.cloudinary.com/dqrrkueir/image/upload/v1675493895/greenguru/image-removebg-preview_3_vm5zjq.png"
 							></ServiceCard>
 							<ServiceCard
-								title="Community"
-								imgWidth={39}
-								imgHeight={75}
-								image="https://res.cloudinary.com/dqrrkueir/image/upload/v1673361866/greenguru/pngwing_5_wzeohh.png"
+                              onPressed={()=>{
+                                navigation.navigate('Shop')
+                            }}
+								title="Stores"
+								imgWidth={70}
+								imgHeight={70}
+								image="https://res.cloudinary.com/dqrrkueir/image/upload/v1676100030/greenguru/store-2017_zzdccb.png"
 							></ServiceCard>
 						</View>
 
@@ -174,24 +194,26 @@ export default Dashboard = ({ navigation }) => {
 							]}
 						>
 							<ServiceCard
-								title="My History"
-								imgWidth={52}
-								imgHeight={75}
-								image="https://res.cloudinary.com/dqrrkueir/image/upload/v1673361867/greenguru/pngwing_8_ufujs0.png"
+								title="News"
+								imgWidth={50}
+								imgHeight={50}
+                                imageMarginTop={10}
+                                textMarginTop={10}
+								image="https://res.cloudinary.com/dqrrkueir/image/upload/v1676100027/greenguru/image-removebg-preview_4_hxkpa4.png"
 							></ServiceCard>
 							<ServiceCard
-                                onPressed={()=>{
-                                    navigation.navigate('Shop')
-                                }}
-								title="Shops"
-								imgWidth={39}
-								imgHeight={75}
-								image="https://res.cloudinary.com/dqrrkueir/image/upload/v1673361866/greenguru/pngwing_5_wzeohh.png"
+								title="Logout"
+								imgWidth={50}
+								imgHeight={50}
+                                imageMarginTop={10}
+                                textMarginTop={10}
+                                onPressed={handleLogout}
+								image="https://res.cloudinary.com/dqrrkueir/image/upload/v1676100457/greenguru/image-removebg-preview_5_tn7u3n.png"
 							></ServiceCard>
 						</View>
 					</View>
-                
-                {(articles[0] && articles[0].length) && 
+            
+                {(articles.length) && 
 					<View>
 						<Text style={[commonStyles.header4, { margin: "2%" }]}>
 							Trending News
@@ -238,9 +260,9 @@ export default Dashboard = ({ navigation }) => {
 					</View> 
                     }
 				</View>
-				<TouchableOpacity onPress={handleLogout}>
+				{/* <TouchableOpacity onPress={handleLogout}>
 					<Text>Logout</Text>
-				</TouchableOpacity>
+				</TouchableOpacity> */}
 			</ScrollView>
 		</View>
 	);

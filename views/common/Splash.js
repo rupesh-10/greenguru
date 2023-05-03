@@ -6,7 +6,7 @@ export default function Splash({navigation}) {
 
     checkAuthenticated.isNotAuthenticated()
     checkAuthenticated.isAuthenticated()
- 
+
     return (
       <View style={{
           // Try setting `flexDirection` to `"row"`.

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Image, View, ActivityIndicator, TouchableWithoutFeedback, Pressable, Modal,StyleSheet, Text} from 'react-native';
 import ServicesCard from '../components/ServicesCard';
 import * as ImagePicker from 'expo-image-picker';
+import COLORS from '../consts/colors';
 import Services from '../../api/services'
 
 export default function Detector() {
@@ -9,6 +10,7 @@ export default function Detector() {
   const [isProcessing,setIsProcessing] = useState(false)
   const [modalVisible, setModalVisible] = useState(false);
   const [result, setResult] = useState('');
+  const [recommendation,setRecommendation] = useState('');
   const [isHealthy,setIsHealthy] = useState(false)
 
   const images = {
@@ -29,7 +31,7 @@ export default function Detector() {
 
     if (!result.canceled) {
         const imageUrl = result.assets[0].uri
-        checkImage(imageUrl,result.base64)
+        checkImage(imageUrl)
     }
   };
 
@@ -53,21 +55,48 @@ export default function Detector() {
 
     if(!result.canceled){
         const imageUrl = result.assets[0].uri
-        checkImage(imageUrl,result.base64)
+        console.log('Image hai camera bata.............')
+        console.log(imageUrl)
+        checkImage(imageUrl)
     }
   }
 
-  const checkImage = (image,base64) => {
+  const checkImage = async (image) => {
         setIsProcessing(true)
         setImage(image);
-
-        Services.postImage(base64).then(res=>{
-        setResult('Your plant is healthy, yahoo....')
-        setIsHealthy(true)
-        setModalVisible(true)
+        console.log(image)
+        Services.postImage(image).then(async res=>{
+        const {data} = res.data
+        const splitedData = data.split('___')
+        let plantName = ''
+        let diseaseName =''
+        console.log('----------------')
+        console.log(data)
+        console.log('---------------')
+        if(splitedData.length > 0){
+             plantName = splitedData[0].replaceAll('_',' ')
+             diseaseName = splitedData[1].replaceAll('_',' ')
+        }
+        const {probability} = res.data
+        const {status} = res.data
+        if(status==200){
+            if(diseaseName.toLowerCase().includes('healthy')){
+                setResult(`Congratulation, your plant ${plantName} is healthy`)
+                setIsHealthy(true)
+                return setModalVisible(true)
+            }
+            await Services.checkRecommendation(data).then(res=>{
+                setRecommendation(res.data.message)
+            })
+            setResult(`Oops! Your plant ${plantName} is effected by${diseaseName.toLowerCase()}`)
+            setIsHealthy(false)
+            setModalVisible(true)
+        }
+        }).catch(err=>{
+            console.log(err)
         })
         .finally(()=>{
-        setIsProcessing(false)
+         setIsProcessing(false)
         })
 
   }
@@ -77,14 +106,14 @@ export default function Detector() {
   }
 
   return (
-    <View style={{height:'100%'}}>
+    <View style={{height:'100%',backgroundColor:COLORS.backGrey}}>
     {isProcessing && <ActivityIndicator size="large" style={{alignSelf:'center',height:'100%',position:'absolute'}} />}
     <View style={{ flex:1, justifyContent:'center', alignItems:'center'}}>
-         {image && <Image source={{ uri: image }} style={{ width: 280, height: 280 }} />}
+         {image && <Image source={{ uri: image }} style={{ width: 300, height: 280, borderRadius:15 }} />}
     </View>
     <View style={{flex:1,  flexDirection: "row", justifyContent: 'space-around' }}>
-        <ServicesCard imgWidth={80} imgHeight={75} height={120} onPressed={pickImage} title="Upload Image" image="https://res.cloudinary.com/dqrrkueir/image/upload/v1675611282/greenguru/upload-svgrepo-com_jax4ow.png"></ServicesCard>
-        <ServicesCard imgWidth={80} imgHeight={75} height={120} onPressed={captureImage} title="Capture Image" image="https://res.cloudinary.com/dqrrkueir/image/upload/v1675611263/greenguru/camera-svgrepo-com_kcjavt.png"></ServicesCard>
+        <ServicesCard imgWidth={80} imgHeight={75} height={120} onPressed={pickImage} title="Upload Image" image="https://res.cloudinary.com/dqrrkueir/image/upload/v1676100822/greenguru/image-removebg-preview_6_h6amuh.png"></ServicesCard>
+        <ServicesCard imgWidth={80} imgHeight={75} height={120} onPressed={captureImage} title="Capture Image" image="https://res.cloudinary.com/dqrrkueir/image/upload/v1676100911/greenguru/image-removebg-preview_7_cidpia.png"></ServicesCard>
     </View>
 
 
@@ -99,9 +128,10 @@ export default function Detector() {
           </TouchableWithoutFeedback>
 
           <View style={styles.modalContent}>
-          <View style={styles.modalView}>
+          <View style={[styles.modalView,{backgroundColor:'white'}]}>
             <Image source={{uri : isHealthy ? images['healthy'] : images['notHealthy']}} style={styles.resultImage}></Image>
-            <Text style={styles.modalText}>{result}</Text>
+            <Text style={[styles.modalText,{color:isHealthy?'#97d260':'#C61041'}]}>{result}</Text>
+            {!isHealthy && (<Text style={[styles.modalText,{}]}>{recommendation}</Text>)}
             <Pressable
               style={[styles.button, styles.buttonClose]}
               onPress={() => setModalVisible(!modalVisible)}>
@@ -128,7 +158,7 @@ const styles = StyleSheet.create({
         bottom: 0,
         left: 0,
         right: 0,
-        backgroundColor: 'rgba(0,0,0,0.5)'
+        backgroundColor:'rbga(255,255,255,0)'
       },
 
       button: {
@@ -156,7 +186,7 @@ const styles = StyleSheet.create({
       },
       modalView: {
         margin: 20,
-        backgroundColor: 'white',
+    
         borderRadius: 20,
         padding: 35,
         alignItems: 'center',

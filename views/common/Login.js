@@ -5,9 +5,6 @@ import * as SecureStore from 'expo-secure-store';
 import * as Device from "expo-device";
 import checkAuthenticated from '../../middlewares/checkAuthenticated';
 
-import {
-    Roboto_400Regular,
-} from "@expo-google-fonts/dev";
 import { auth } from '../../firebase';
 import MyModal from "../components/MyModal";
 import services from '../../api/services';
@@ -126,7 +123,6 @@ const styles = StyleSheet.create({
       padding:10,
       fontSize:24,
       color:'#295A54',
-      fontFamily:'Roboto_400Regular'
     },
     loginButton:{
         height: 64,
@@ -144,7 +140,6 @@ const styles = StyleSheet.create({
           fontSize:20,
           lineHeight:23,
           fontWeight:'400',
-          fontFamily:'Roboto_400Regular'
       },
       forgotPassword:{
         alignSelf:'flex-end',
